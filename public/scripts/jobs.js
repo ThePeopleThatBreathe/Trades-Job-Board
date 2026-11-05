@@ -1,5 +1,7 @@
 $(document).ready(function () {
-  $("#jobs-table").DataTable();
+  $("#jobs-table").DataTable({
+    responsive: true
+  });
 
   function closeModal() {
     $("#job-modal").prop("hidden", true);

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trades Job Board</title>
-    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <%- include('partials/head', {title: "Trades Job Board"}) %>
     <link rel="stylesheet" href="styles/style.css" />
     <link rel="stylesheet" href="styles/home.css" />
   </head>
 
   <body>
-    <a href="/jobs">Browse Jobs</a>
-    <a href="/add-job">Add a New Job</a>
+    <h1>Home</h1>
+    <div>
+      <a href="/jobs">Browse Jobs</a>
+      <a href="/add-job">Add a New Job</a>
+    </div>
   </body>
 </html>
