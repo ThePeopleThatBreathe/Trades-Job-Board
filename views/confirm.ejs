@@ -13,6 +13,7 @@
     <p>Company name: <%= job["company-name"] %></p>
     <p>Trade area: <%= job["trade-area"] %></p>
     <p>Location: <%= job["location"] %></p>
+    <p>Internship: <%= job["internship"] = (job["internship"] ? job["internship"] : "false") %></p>
     <p>Working hours: <%= job["working-hours"] %></p>
     <p>Post date: <%= job["post-date"] %></p>
     <p>Expiration date: <%= job["expiration-date"] %></p>
