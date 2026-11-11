@@ -18,6 +18,8 @@ $(document).ready(function () {
         row.attr("data-trade") +
         " | " +
         row.attr("data-location") +
+        " | Internship: " +
+        row.attr("data-internship") +
         " | " +
         row.attr("data-hours") +
         " | Posted " +
