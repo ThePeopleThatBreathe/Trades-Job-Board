@@ -14,6 +14,7 @@ form {
     "company-name"
     "trade-area"
     "location"
+    "internship"
     "working-hours"
     "post-date"
     "expiration-date"
@@ -47,6 +48,12 @@ div[id$="group"] {
   grid-area: location;
 }
 
+#internship-group {
+  grid-area: internship;
+  flex-direction: row;
+  align-items: center;
+}
+
 #working-hours-group {
   grid-area: working-hours;
 }
@@ -78,6 +85,16 @@ input, select {
 
 input:focus, select:focus {
   outline: medium solid var(--gator-green);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  border-radius: 1px;
+  outline-offset: 3px;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--gator-green);
 }
 
 input[type="radio"] {
