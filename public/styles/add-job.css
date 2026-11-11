@@ -19,6 +19,7 @@ form {
     "post-date"
     "expiration-date"
     "application-url"
+    "description"
     "submit-button";
   padding: 15px;
   border: medium solid var(--gator-green);
@@ -68,6 +69,10 @@ div[id$="group"] {
 
 #application-url-group {
   grid-area: application-url;
+}
+
+#description-group {
+  grid-area: description;
 }
 
 #submit-button-group {

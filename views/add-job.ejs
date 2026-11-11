@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('partials/head', {title: "Add A Job"}) %>
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-  <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/add-job.css">
-  <script src = "/scripts/script.js" defer></script>
+  <script src="/scripts/script.js" defer></script>
 </head>
+
 <body>
-  <form action="/submit-job" method="post" id = "form">
+  <form action="/submit-job" method="post" id="form">
     <div id="job-title-group">
       <label for="job-title">Job Title</label>
       <input type="text" id="job-title" name="job-title">
-      <span id = "err-job-title" class = "err">Job title cannot be empty</span>
+      <span id="err-job-title" class="err">Job title cannot be empty</span>
     </div>
 
     <div id="company-name-group">
       <label for="company-name">Company Name</label>
       <input type="text" id="company-name" name="company-name">
-      <span id = "err-company-name" class = "err">Company name cannot be empty</span>
+      <span id="err-company-name" class="err">Company name cannot be empty</span>
     </div>
 
     <div id="trade-area-group">
@@ -31,13 +32,13 @@
         <option value="mechatronics">Mechatronics</option>
         <option value="welding">Welding</option>
       </select>
-      <span id = "err-trade-area" class = "err">Please select a trade area</span>
+      <span id="err-trade-area" class="err">Please select a trade area</span>
     </div>
 
     <div id="location-group">
       <label for="location">Location</label>
       <input type="text" id="location" name="location">
-      <span id = "err-location" class = "err">Location cannot be empty</span>
+      <span id="err-location" class="err">Location cannot be empty</span>
     </div>
 
     <div id="internship-group">
@@ -49,38 +50,44 @@
       <div id="working-hours-title">
         Working Hours
       </div>
-      
-      <div id="working-hours-body">        
+
+      <div id="working-hours-body">
         <input type="radio" id="part-time" name="working-hours" value="part-time">
         <label for="part-time">Part Time</label>
-    
+
         <input type="radio" id="full-time" name="working-hours" value="full-time">
         <label for="full-time">Full Time</label>
-        <span id = "err-working-hours" class = "err">Select one of the options above</span>
+        <span id="err-working-hours" class="err">Select one of the options above</span>
       </div>
     </div>
 
     <div id="post-date-group">
       <label for="post-date">Post Date</label>
       <input type="date" id="post-date" name="post-date">
-      <span id = "err-post-date" class = "err">Enter in the posted date</span>
+      <span id="err-post-date" class="err">Enter in the posted date</span>
     </div>
 
     <div id="expiration-date-group">
       <label for="expiration-date">Expiration Date</label>
       <input type="date" id="expiration-date" name="expiration-date">
-      <span id = "err-expiration-date" class = "err"></span>
+      <span id="err-expiration-date" class="err"></span>
     </div>
 
     <div id="application-url-group">
       <label for="application-url">Application URL</label>
       <input type="text" id="application-url" name="application-url">
-      <span id = "err-application-url" class = "err"></span>
+      <span id="err-application-url" class="err"></span>
+    </div>
+
+    <div id="description-group">
+      <label for="description">Add a Description</label>
+      <textarea name="description" id="description" rows="8" cols="50"></textarea>
     </div>
 
     <div id="submit-button-group">
       <button type="submit">Add a Job Posting</button>
     </div>
-  </form>  
+  </form>
 </body>
+
 </html>

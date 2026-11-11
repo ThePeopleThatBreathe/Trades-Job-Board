@@ -22,16 +22,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Define a default route ("/")
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("home", { jobs });
 });
 
 // Define a route to add a job ("/")
 app.get("/add-job", (req, res) => {
   res.render("add-job");
-});
-
-app.get("/jobs", (req, res) => {
-  res.render("jobs", { jobs });
 });
 
 // Define a route to submit form data and show confirmation page
