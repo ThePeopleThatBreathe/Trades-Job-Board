@@ -1,16 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <%- include('partials/head', {title: "Trades Job Board"}) %>
-    <link rel="stylesheet" href="styles/style.css" />
-    <link rel="stylesheet" href="styles/home.css" />
-  </head>
 
-  <body>
-    <h1>Home</h1>
-    <div>
-      <a href="/jobs">Browse Jobs</a>
-      <a href="/add-job">Add a New Job</a>
+<head>
+  <%- include('partials/head', {title: "Trades Job Board"}) %>
+  <link rel="stylesheet" href="styles/home.css">
+
+  <link href="https://cdn.datatables.net/v/dt/dt-3.1.5/r-4.1.1/datatables.min.css" rel="stylesheet" integrity="sha384-yPuqMM26m3xoq6dPtFxk8qhOIgSBjcasCVJ2HjOU4vVdW5pxV24CgXItr3dUux1j" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/4.1.1/css/responsive.dataTables.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js" defer></script>
+  <script src="https://cdn.datatables.net/v/dt/dt-3.1.5/r-4.1.1/datatables.min.js" integrity="sha384-LvxskSzbs78iwBmZWqEZZjntG+4km6MrgzZFvHA7p13W/4RyigYEl2SNif1zhq3F" crossorigin="anonymous" defer></script>
+
+  <script src="/scripts/jobs.js" defer></script>
+</head>
+
+<body>
+  <div id="banner">
+    <img src="/images/GRC_Logo_White.png" alt="GRC Logo">
+    <div id="banner-txt">
+      <h1>Trades</h1>
+      <h2>Job Board</h2>
     </div>
-  </body>
+  </div>
+
+  <div id="main">
+    <% if (jobs.length === 0) { %>
+    <p>No jobs are available right now.</p>
+    <% } else { %>
+    <table id="jobs-table">
+      <thead>
+        <tr>
+          <th>Job Title</th>
+          <th>Company</th>
+          <th>Trade Area</th>
+          <th>Location</th>
+          <th>Internship</th>
+          <th>Hours</th>
+          <th>Date Posted</th>
+          <th>Expires</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% jobs.forEach((job) => { %>
+        <tr data-title="<%= job["job-title"] %>" data-company="<%= job["company-name"] %>" data-trade="<%= job["trade-area"] %>" data-location="<%= job["location"] %>" data-internship="<%= job["internship"] %>" data-hours="<%= job["working-hours"] %>" data-posted="<%= job["post-date"] %>" data-expires="<%= job["expiration-date"] %>" data-url="<%= job["application-url"] %>" data-description="<%= job["description"] %>">
+          <td><%= job["job-title"] %></td>
+          <td><%= job["company-name"] %></td>
+          <td><%= job["trade-area"] %></td>
+          <td><%= job["location"] %></td>
+          <td><%= job["internship"] %></td>
+          <td><%= job["working-hours"] %></td>
+          <td><%= job["post-date"] %></td>
+          <td><%= job["expiration-date"] %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+
+
+
+
+    <div id="job-modal" class="modal" hidden>
+      <div class="modal-content">
+        <button id="modal-close" type="button" aria-label="Close">&times;</button>
+        <h2 id="modal-title"></h2>
+        <p id="modal-details"></p>
+        <p id="modal-description"></p>
+        <div class="modal-footer">
+          <a id="modal-apply" href="#" target="_blank" rel="noopener noreferrer">Apply Now</a>
+        </div>
+      </div>
+    </div>
+
+    <a href="/add-job">Add Jobs</a>
+
+    <!-- For responsive table  -->
+    <script src="https://cdn.datatables.net/responsive/4.1.1/js/dataTables.responsive.min.js"></script>
+  </div>
+
+</body>
+
 </html>

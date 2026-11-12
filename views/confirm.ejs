@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <%- include('partials/head', {title: "Confirmation for Job Addition"}) %>
-  <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/confirm.css">
 </head>
+
 <body>
   <div id="confirmation-message">
     <h1>Job has been added</h1>
-  
+
     <p>Job title: <%= job["job-title"] %></p>
     <p>Company name: <%= job["company-name"] %></p>
     <p>Trade area: <%= job["trade-area"] %></p>
@@ -19,11 +20,21 @@
     <p>Expiration date: <%= job["expiration-date"] %></p>
     <p>Application URL: <%= job["application-url"] %></p>
     <p>Timestamp: <%= job["timestamp"] %></p>
-    
+    <p>
+      Description:
+      <% if (job["description"] && job["description"].trim() !== "") { %>
+      <%= job["description"] %>
+      <% } else { %>
+      No description provided.
+      <% } %>
+    </p>
+
+
     <div id="links">
       <a href="/">Return to Home</a>
       <a href="/add-job">Add a New Job</a>
     </div>
   </div>
 </body>
+
 </html>
