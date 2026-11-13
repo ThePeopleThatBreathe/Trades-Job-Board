@@ -3,10 +3,10 @@ body {
   padding: 0;
 }
 
-/* Banner Styling */
-#banner {
-  width: 100vw;
-  height: 400px;
+/* Header Styling */
+header {
+  width: 100%;
+  height: 300px;
   color: white;
   box-sizing: border-box;
 
@@ -25,32 +25,32 @@ body {
   padding-left: 3rem;
 }
 
-#banner img {
-  width: 25%;
+header img {
+  width: 18%;
+  min-width: 160px;
   height: auto;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   float: none;
 }
 
-/* Banner text */
-#banner-txt {
-  width: 25%;
+/* Header text */
+#header-txt {
+  width: 18%;
+  min-width: 160px;
   text-align: center;
   padding-left: 0;
+  margin: 0;
 }
 
-#banner-txt h1 {
-  font-size: 2.5rem;
-  margin: 0;
-  line-height: 1.1;
+/* Nav */
+nav {
+  display: flex;
+  justify-self: center;
+  padding-top: 0.5rem;
+  gap: 0.5rem;
 }
 
-#banner-txt h2 {
-  font-size: 2rem;
-  margin: 0;
-  line-height: 1.2;
-}
 /* Jobs Table Styling */
 #main {
   display: flex;
@@ -67,6 +67,7 @@ body {
   background-color: var(--dark-accent);
 }
 
+/* Modal Styling */
 .modal {
   position: fixed;
   inset: 0;
@@ -96,12 +97,15 @@ body {
   border-radius: 15px;
 }
 
-#modal-close {
+#modal-close,
+#login-close {
   position: absolute;
   top: 10px;
   right: 10px;
+  padding: 0 8px;
   background: none;
   border: none;
+  color: black;
   font-size: 1.5rem;
   cursor: pointer;
 }
@@ -112,15 +116,6 @@ body {
 }
 
 #modal-apply {
-  text-decoration: none;
-  color: white;
-  padding: 10px 20px;
-  background-color: var(--gator-green);
-  border-radius: 5px;
-}
-
-/* Link Styling */
-a {
   text-decoration: none;
   color: white;
   padding: 10px 20px;

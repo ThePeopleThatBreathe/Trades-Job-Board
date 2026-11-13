@@ -81,14 +81,16 @@ div[id$="group"] {
   justify-content: center;
 }
 
-input, select {
+input,
+select {
   padding: 5px;
   outline: thin solid;
   border: none;
   border-radius: 5px;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   outline: medium solid var(--gator-green);
 }
 
@@ -109,15 +111,6 @@ input[type="radio"] {
 
 input[type="radio"]:checked {
   background-color: var(--gator-green);
-}
-
-button {
-  padding: 10px 20px;
-  color: white;
-  background-color: var(--gator-green);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .err {
