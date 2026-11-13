@@ -1,6 +1,7 @@
 $(document).ready(function () {
   $("#jobs-table").DataTable({
-    responsive: true
+    responsive: true, 
+    order: []
   });
 
   function closeModal() {

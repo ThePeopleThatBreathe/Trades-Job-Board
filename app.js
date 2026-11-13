@@ -18,9 +18,6 @@ const app = express();
 // Define a port number for our server to listen on
 const PORT = 3004;
 
-// Create an array for created jobs
-const jobs = [];
-
 // Enable static file serving
 app.use(express.static("public"));
 
@@ -32,8 +29,15 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
 // Define a default route ("/")
-app.get("/", (req, res) => {
-  res.render("home", { jobs  });
+app.get("/", async (req, res) => {
+  try {
+    const [jobs] = await pool.query('SELECT * FROM job_listings ORDER BY post_date DESC');
+    console.log(jobs); 
+    res.render("home", { jobs });
+  } catch (err) {
+    console.log("Database Error: " + err); 
+    res.status(500).send("Database Error occurred"); 
+  }
 });
 
 // Define a route to add a job ("/")
@@ -47,15 +51,20 @@ app.post("/submit-job", async (req, res) => {
   console.log(job);
 
   job.internship = req.body.internship == "true" ? true : false;
-  
+
   try {
-  // Prepare statement
-  const sql = `INSERT INTO job_listings 
-  (job_title, company_name, trade_area, location, internship, working_hours, 
-  post_date, expiration_date, application_url, description) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-  
-  // Create an array of parameters from job data
-  const params = [
+    // Prepare statement
+    const sql = `
+    INSERT INTO job_listings (
+      job_title, company_name, trade_area, location, internship, working_hours, 
+      post_date, expiration_date, application_url, description
+    ) 
+    VALUES(
+      ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+    )`;
+
+    // Create an array of parameters from job data
+    const params = [
       job["job-title"],
       job["company-name"],
       job["trade-area"],
@@ -66,23 +75,18 @@ app.post("/submit-job", async (req, res) => {
       job["expiration-date"],
       job["application-url"],
       job["description"],
-  ];
+    ];
 
-  // Execute query
-  const [result] = await pool.execute(sql, params);
-  jobs.push(job);
-  job.id = result.insertId;
+    // Execute query
+    const [result] = await pool.execute(sql, params);
+    const [[saved]] = await pool.execute("SELECT * FROM job_listings WHERE id = ?", [result.insertId]);
 
-  // Render job
-  res.render("confirm", {job});  
-} catch (err) {
-  console.log("Inserting into db has caused an error: ", err);
-  res.status(500).send("Sorry. An error has occured. Please try again or try later");
-}
-
-  
-
-  
+    // Render job
+    res.render("confirm", { job: saved });
+  } catch (err) {
+    console.log("Inserting into db has caused an error: ", err);
+    res.status(500).send("Sorry. An error has occured. Please try again or try later");
+  }
 });
 
 // Start the server on the designated port

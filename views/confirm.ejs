@@ -3,7 +3,7 @@
 
 <head>
   <%- include('partials/head', {title: "Confirmation for Job Addition"}) %>
-  <link rel="stylesheet" href="styles/confirm.css">
+  <link rel="stylesheet" href="/styles/confirm.css">
 </head>
 
 <body>
@@ -11,16 +11,16 @@
     <h1>Job has been added</h1>
 
     <p>Job Id: <%= job["id"]%></p>
-    <p>Job title: <%= job["job-title"] %></p>
-    <p>Company name: <%= job["company-name"] %></p>
-    <p>Trade area: <%= job["trade-area"] %></p>
+    <p>Job title: <%= job["job_title"] %></p>
+    <p>Company name: <%= job["company_name"] %></p>
+    <p>Trade area: <%= job["trade_area"] %></p>
     <p>Location: <%= job["location"] %></p>
     <p>Internship: <%= job["internship"] = (job["internship"] ? job["internship"] : "false") %></p>
-    <p>Working hours: <%= job["working-hours"] %></p>
-    <p>Post date: <%= job["post-date"] %></p>
-    <p>Expiration date: <%= job["expiration-date"] %></p>
-    <p>Application URL: <%= job["application-url"] %></p>
-    <p>Timestamp: <%= job["timestamp"] %></p>
+    <p>Working hours: <%= job["working_hours"] %></p>
+    <p>Post date: <%= job["post_date"].toLocaleString() %></p>
+    <p>Expiration date: <%= job["expiration_date"].toLocaleString() %></p>
+    <p>Application URL: <%= job["application_url"] %></p>
+    <p>Timestamp: <%= job["timestamp"].toLocaleString() %></p>
     <p>
       Description:
       <% if (job["description"] && job["description"].trim() !== "") { %>
