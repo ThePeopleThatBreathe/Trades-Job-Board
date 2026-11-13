@@ -1,5 +1,7 @@
 // Import the express module
 import express from "express";
+import dotenv from "dotenv"
+dotenv.config();
 
 // Create an instance of an express application
 const app = express();
