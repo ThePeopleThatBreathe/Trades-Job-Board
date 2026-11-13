@@ -48,13 +48,13 @@ app.post("/submit-job", async (req, res) => {
 
   job.internship = req.body.internship == "true" ? true : false;
   
-  
   try {
-    const sql = `INSERT INTO job_listings 
-    (job_title, company_name, trade_area, location, internship, working_hours, 
-    post_date, expiration_date, application_url, description) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  // Prepare statement
+  const sql = `INSERT INTO job_listings 
+  (job_title, company_name, trade_area, location, internship, working_hours, 
+  post_date, expiration_date, application_url, description) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   
-  //create an array of parameters from job data
+  // Create an array of parameters from job data
   const params = [
       job["job-title"],
       job["company-name"],
@@ -71,6 +71,9 @@ app.post("/submit-job", async (req, res) => {
   // Execute query
   const [result] = await pool.execute(sql, params);
   jobs.push(job);
+  job.id = result.insertId;
+
+  // Render job
   res.render("confirm", {job});  
 } catch (err) {
   console.log("Inserting into db has caused an error: ", err);
