@@ -26,11 +26,3 @@ p {
   justify-content: center;
   gap: 15px;
 }
-
-a {
-  text-decoration: none;
-  color: white;
-  padding: 10px 20px;
-  background-color: var(--gator-green);
-  border-radius: 5px;
-}

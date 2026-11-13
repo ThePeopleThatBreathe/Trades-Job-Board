@@ -1,13 +1,21 @@
 $(document).ready(function () {
   $("#jobs-table").DataTable({
-    responsive: true, 
-    order: []
+    responsive: true,
+    order: [],
   });
 
-  function closeModal() {
-    $("#job-modal").prop("hidden", true);
+  // Swap Login for Add Jobs
+  function showAdmin() {
+    $("#login-btn").prop("hidden", true);
+    $("#add-job-link").prop("hidden", false);
   }
 
+  // Closes whichever modal is open
+  function closeModal() {
+    $(".modal").prop("hidden", true);
+  }
+
+  // Job modal
   $("#jobs-table tbody").on("click", "tr", function () {
     const row = $(this);
 
@@ -43,11 +51,30 @@ $(document).ready(function () {
     $("#job-modal").prop("hidden", false);
   });
 
-  // Close button
-  $("#modal-close").on("click", closeModal);
+  // Login modal
+  $("#login-btn").on("click", function () {
+    $("#login-form")[0].reset();
+    $("#login-error").prop("hidden", true);
+    $("#login-modal").prop("hidden", false);
+    $("#username").trigger("focus");
+  });
+
+  $("#login-form").on("submit", function (event) {
+    event.preventDefault();
+
+    if ($("#username").val() === "admin" && $("#password").val() === "123") {
+      showAdmin();
+      closeModal();
+    } else {
+      $("#login-error").prop("hidden", false);
+    }
+  });
+
+  // Close buttons
+  $("#modal-close, #login-close").on("click", closeModal);
 
   // Click on the dark background (but not inside the white box)
-  $("#job-modal").on("click", function (event) {
+  $(".modal").on("click", function (event) {
     if (event.target === this) {
       closeModal();
     }
