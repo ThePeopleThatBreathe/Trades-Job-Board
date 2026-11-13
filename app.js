@@ -54,7 +54,7 @@ app.post("/submit-job", async (req, res) => {
     (job_title, company_name, trade_area, location, internship, working_hours, 
     post_date, expiration_date, application_url, description) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   
-  //create an array of parameters from order data
+  //create an array of parameters from job data
   const params = [
       job["job-title"],
       job["company-name"],
