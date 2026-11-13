@@ -1,7 +1,16 @@
 // Import the express module
 import express from "express";
+import mysql from "mysql2"
 import dotenv from "dotenv"
 dotenv.config();
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
+}).promise();
 
 // Create an instance of an express application
 const app = express();
@@ -24,7 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Define a default route ("/")
 app.get("/", (req, res) => {
-  res.render("home", { jobs });
+  res.render("home", { jobs  });
 });
 
 // Define a route to add a job ("/")
@@ -35,6 +44,8 @@ app.get("/add-job", (req, res) => {
 // Define a route to submit form data and show confirmation page
 app.post("/submit-job", (req, res) => {
   const job = req.body;
+
+  job.internship = req.body.internship == true ? "true" : "false";
 
   job["timestamp"] = new Date();
   console.log(job);
