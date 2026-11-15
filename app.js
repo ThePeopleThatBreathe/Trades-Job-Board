@@ -20,6 +20,9 @@ const app = express();
 // Define a port number for our server to listen on
 const PORT = 3004;
 
+// Temp saved jobs variable
+const savedJobs = [];
+
 // Enable static file serving
 app.use(express.static("public"));
 
@@ -47,6 +50,11 @@ app.get("/", async (req, res) => {
 // Define a route to add a job
 app.get("/add-job", (req, res) => {
   res.render("add-job");
+});
+
+// Define a route to view saved jobs
+app.get("/saved-jobs", (req, res) => {
+  res.render("saved-jobs", { savedJobs });
 });
 
 // Define a route to submit form data and show confirmation page

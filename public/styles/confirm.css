@@ -21,7 +21,7 @@ p {
   margin: 0;
 }
 
-#links {
+nav {
   display: flex;
   justify-content: center;
   gap: 15px;

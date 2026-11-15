@@ -9,8 +9,7 @@ html {
 }
 
 /* Link Styling */
-button,
-a {
+.button {
   text-decoration: none;
   color: white;
   padding: 10px 20px;

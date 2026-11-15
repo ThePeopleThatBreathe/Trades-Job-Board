@@ -1,13 +1,21 @@
+let userType = null;
+
 $(document).ready(function () {
   $("#jobs-table").DataTable({
-    responsive: true,
+    responsive: {
+      details: false,
+    },
     order: [],
   });
 
-  // Swap Login for Add Jobs
-  function showAdmin() {
+  // Swap Login button based on the signed in user
+  function swapLoginButton(userType) {
     $("#login-btn").prop("hidden", true);
-    $("#add-job-link").prop("hidden", false);
+    if (userType === "admin") {
+      $("#add-job-link").prop("hidden", false);
+    } else if (userType === "basic") {
+      $("#saved-jobs-link").prop("hidden", false);
+    }
   }
 
   // Closes whichever modal is open
@@ -63,7 +71,15 @@ $(document).ready(function () {
     event.preventDefault();
 
     if ($("#username").val() === "admin" && $("#password").val() === "123") {
-      showAdmin();
+      userType = "admin";
+      swapLoginButton(userType);
+      closeModal();
+    } else if (
+      $("#username").val() === "testUser" &&
+      $("#password").val() === "456"
+    ) {
+      userType = "basic";
+      swapLoginButton(userType);
       closeModal();
     } else {
       $("#login-error").prop("hidden", false);
