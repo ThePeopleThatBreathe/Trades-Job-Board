@@ -1,22 +1,27 @@
 // Import the express module
 import express from "express";
-import mysql from "mysql2"
-import dotenv from "dotenv"
+import mysql from "mysql2";
+import dotenv from "dotenv";
 dotenv.config();
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT
-}).promise();
+const pool = mysql
+  .createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+  })
+  .promise();
 
 // Create an instance of an express application
 const app = express();
 
 // Define a port number for our server to listen on
 const PORT = 3004;
+
+// Temp saved jobs variable
+const savedJobs = [];
 
 // Enable static file serving
 app.use(express.static("public"));
@@ -31,18 +36,25 @@ app.use(express.urlencoded({ extended: true }));
 // Define a default route ("/")
 app.get("/", async (req, res) => {
   try {
-    const [jobs] = await pool.query('SELECT * FROM job_listings ORDER BY post_date DESC');
-    console.log(jobs); 
+    const [jobs] = await pool.query(
+      "SELECT * FROM job_listings ORDER BY post_date DESC",
+    );
+    console.log(jobs);
     res.render("home", { jobs });
   } catch (err) {
-    console.log("Database Error: " + err); 
-    res.status(500).send("Database Error occurred"); 
+    console.log("Database Error: " + err);
+    res.status(500).send("Database Error occurred");
   }
 });
 
-// Define a route to add a job ("/")
+// Define a route to add a job
 app.get("/add-job", (req, res) => {
   res.render("add-job");
+});
+
+// Define a route to view saved jobs
+app.get("/saved-jobs", (req, res) => {
+  res.render("saved-jobs", { savedJobs });
 });
 
 // Define a route to submit form data and show confirmation page
@@ -79,13 +91,18 @@ app.post("/submit-job", async (req, res) => {
 
     // Execute query
     const [result] = await pool.execute(sql, params);
-    const [[saved]] = await pool.execute("SELECT * FROM job_listings WHERE id = ?", [result.insertId]);
+    const [[saved]] = await pool.execute(
+      "SELECT * FROM job_listings WHERE id = ?",
+      [result.insertId],
+    );
 
     // Render job
     res.render("confirm", { job: saved });
   } catch (err) {
     console.log("Inserting into db has caused an error: ", err);
-    res.status(500).send("Sorry. An error has occured. Please try again or try later");
+    res
+      .status(500)
+      .send("Sorry. An error has occured. Please try again or try later");
   }
 });
 

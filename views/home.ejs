@@ -3,25 +3,27 @@
 
 <head>
   <%- include('partials/head', {title: "Trades Job Board"}) %>
+  <%- include('partials/jQuery') %>
+  <%- include('partials/datatables') %>
+
   <link rel="stylesheet" href="styles/home.css">
-
-  <link href="https://cdn.datatables.net/v/dt/dt-3.1.5/r-4.1.1/datatables.min.css" rel="stylesheet" integrity="sha384-yPuqMM26m3xoq6dPtFxk8qhOIgSBjcasCVJ2HjOU4vVdW5pxV24CgXItr3dUux1j" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/4.1.1/css/responsive.dataTables.min.css">
-
-  <script src="https://code.jquery.com/jquery-3.7.1.js" defer></script>
-  <script src="https://cdn.datatables.net/v/dt/dt-3.1.5/r-4.1.1/datatables.min.js" integrity="sha384-LvxskSzbs78iwBmZWqEZZjntG+4km6MrgzZFvHA7p13W/4RyigYEl2SNif1zhq3F" crossorigin="anonymous" defer></script>
-
-  <script src="/scripts/jobs.js" defer></script>
+  <script src="/scripts/home.js" defer></script>
 </head>
 
 <body>
-  <div id="banner">
+  <header>
     <img src="/images/GRC_Logo_White.png" alt="GRC Logo">
-    <div id="banner-txt">
-      <h1>Trades</h1>
-      <h2>Job Board</h2>
+    <div id="header-txt">
+      <h1>Trades Job Board</h1>
     </div>
-  </div>
+  </header>
+
+  <nav>
+    <button class="button" id="login-btn" type="button">Login</button>
+    <a class="button" id="add-job-link" href="/add-job" hidden>Add Jobs</a>
+    <a class="button" id="saved-jobs-link" href="/saved-jobs" hidden>View Saved Jobs</a>
+    <a class="button" href="https://www.greenriver.edu/students/academics/areas-of-interest/program-maps/trades-industrial-tech-aviation-natural-resources/index.html" target="_blank">Learn more about the trades at Green River</a>
+  </nav>
 
   <div id="main">
     <% if (jobs.length === 0) { %>
@@ -49,14 +51,13 @@
           <td><%= job["location"] %></td>
           <td><%= job["internship"] ? "Yes" : "No" %></td>
           <td><%= job["working_hours"].toLocaleString() %></td>
-          <td><%= job["post_date"].toLocaleString() %></td>
-          <td><%= job["expiration_date"].toLocaleString() %></td>
+          <td><%= job["post_date"].toLocaleDateString() %></td>
+          <td><%= job["expiration_date"].toLocaleDateString() %></td>
         </tr>
         <% }) %>
       </tbody>
     </table>
     <% } %>
-
 
 
 
@@ -72,7 +73,23 @@
       </div>
     </div>
 
-    <a href="/add-job">Add Jobs</a>
+    <div id="login-modal" class="modal" hidden>
+      <div class="modal-content">
+        <button id="login-close" type="button" aria-label="Close">&times;</button>
+        <h2>Login</h2>
+        <form id="login-form">
+          <label for="username">Username</label>
+          <input id="username" type="text">
+
+          <label for="password">Password</label>
+          <input id="password" type="password">
+
+          <button class="button" type="submit">Log in</button>
+          <p id="login-error" hidden>Check username or password.</p>
+        </form>
+      </div>
+    </div>
+
   </div>
 
 </body>

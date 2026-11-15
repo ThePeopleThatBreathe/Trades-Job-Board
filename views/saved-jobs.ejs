@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('partials/head', {title: "Saved Jobs"}) %>
+  <%- include('partials/jQuery') %>
+  <%- include('partials/datatables') %>
+  
+  <script src="/scripts/saved-jobs.js" defer></script>
+</head>
+
+<body>
+  <div id="main">
+    <% if (savedJobs.length === 0) { %>
+    <p>No jobs saved</p>
+    <% } else { %>
+    <table id="saved-jobs-table">
+      <thead>
+        <tr>
+          <th>Job Title</th>
+          <th>Company</th>
+          <th>Trade Area</th>
+          <th>Location</th>
+          <th>Internship</th>
+          <th>Hours</th>
+          <th>Date Posted</th>
+          <th>Expires</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% savedJobs.forEach((job) => { %>
+        <tr data-title="<%= job["job_title"] %>" data-company="<%= job["company_name"] %>" data-trade="<%= job["trade_area"] %>" data-location="<%= job["location"] %>" data-internship="<%= job["internship"] %>" data-hours="<%= job["working_hours"] %>" data-posted="<%= job["post_date"] %>" data-expires="<%= job["expiration_date"] %>" data-url="<%= job["application_url"] %>" data-description="<%= job["description"] %>">
+          <td><%= job["job_title"] %></td>
+          <td><%= job["company_name"] %></td>
+          <td><%= job["trade_area"] %></td>
+          <td><%= job["location"] %></td>
+          <td><%= job["internship"] ? "Yes" : "No" %></td>
+          <td><%= job["working_hours"].toLocaleString() %></td>
+          <td><%= job["post_date"].toLocaleDateString() %></td>
+          <td><%= job["expiration_date"].toLocaleDateString() %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+  </div>
+</body>
+
+</html>
