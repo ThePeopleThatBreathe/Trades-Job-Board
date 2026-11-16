@@ -6,7 +6,7 @@
   <%- include('partials/jQuery') %>
   <%- include('partials/datatables') %>
 
-  <link rel="stylesheet" href="styles/home.css">
+  <link rel="stylesheet" href="/styles/home.css">
   <script src="/scripts/home.js" defer></script>
 </head>
 
@@ -18,11 +18,11 @@
     </div>
   </header>
 
-  <nav>
+  <nav id="main-nav">
+    <a class="button" href="https://www.greenriver.edu/students/academics/areas-of-interest/program-maps/trades-industrial-tech-aviation-natural-resources/index.html" target="_blank">Learn more about the trades at Green River</a>
     <button class="button" id="login-btn" type="button">Login</button>
     <a class="button" id="add-job-link" href="/add-job" hidden>Add Jobs</a>
     <a class="button" id="saved-jobs-link" href="/saved-jobs" hidden>View Saved Jobs</a>
-    <a class="button" href="https://www.greenriver.edu/students/academics/areas-of-interest/program-maps/trades-industrial-tech-aviation-natural-resources/index.html" target="_blank">Learn more about the trades at Green River</a>
   </nav>
 
   <div id="main">
@@ -44,7 +44,7 @@
       </thead>
       <tbody>
         <% jobs.forEach((job) => { %>
-        <tr data-title="<%= job["job_title"] %>" data-company="<%= job["company_name"] %>" data-trade="<%= job["trade_area"] %>" data-location="<%= job["location"] %>" data-internship="<%= job["internship"] %>" data-hours="<%= job["working_hours"] %>" data-posted="<%= job["post_date"] %>" data-expires="<%= job["expiration_date"] %>" data-url="<%= job["application_url"] %>" data-description="<%= job["description"] %>">
+        <tr data-title="<%= job["job_title"] %>" data-company="<%= job["company_name"] %>" data-trade="<%= job["trade_area"] %>" data-location="<%= job["location"] %>" data-internship="<%= job["internship"] ? "Yes" : "No" %>" data-hours="<%= job["working_hours"] %>" data-posted="<%= job["post_date"] %>" data-expires="<%= job["expiration_date"] %>" data-url="<%= job["application_url"] %>" data-description="<%= job["description"] %>">
           <td><%= job["job_title"] %></td>
           <td><%= job["company_name"] %></td>
           <td><%= job["trade_area"] %></td>
@@ -61,12 +61,30 @@
 
 
 
-    <div id="job-modal" class="modal" hidden>
+    <div id="job-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
       <div class="modal-content">
         <button id="modal-close" type="button" aria-label="Close">&times;</button>
         <h2 id="modal-title"></h2>
-        <p id="modal-details"></p>
+
+        <dl id="modal-details">
+          <dt>Company</dt>
+          <dd id="modal-company"></dd>
+          <dt>Trade Area</dt>
+          <dd id="modal-trade"></dd>
+          <dt>Location</dt>
+          <dd id="modal-location"></dd>
+          <dt>Hours</dt>
+          <dd id="modal-hours"></dd>
+          <dt>Internship</dt>
+          <dd id="modal-internship"></dd>
+          <dt>Posted</dt>
+          <dd id="modal-posted"></dd>
+          <dt>Expires</dt>
+          <dd id="modal-expires"></dd>
+        </dl>
+
         <p id="modal-description"></p>
+
         <div class="modal-footer">
           <a id="modal-apply" href="#" target="_blank" rel="noopener noreferrer">Apply Now</a>
         </div>
