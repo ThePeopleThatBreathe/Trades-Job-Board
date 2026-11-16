@@ -44,9 +44,10 @@ header img {
 }
 
 /* Nav */
-nav {
+#main-nav {
   display: flex;
-  justify-self: center;
+  flex-direction: column;
+  align-items: center;
   padding-top: 0.5rem;
   gap: 0.5rem;
 }
@@ -119,6 +120,7 @@ nav {
 .modal {
   position: fixed;
   inset: 0;
+  z-index: 1000;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -145,6 +147,11 @@ nav {
   border-radius: 15px;
 }
 
+.modal-content h2 {
+  margin: 0;
+  padding-right: 30px; /* keeps long titles clear of the × button */
+}
+
 #modal-close,
 #login-close {
   position: absolute;
@@ -158,6 +165,26 @@ nav {
   cursor: pointer;
 }
 
+/* Details grid */
+#modal-details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+  margin: 0;
+}
+
+#modal-details dt {
+  font-weight: 600;
+}
+
+#modal-details dd {
+  margin: 0;
+}
+
+#modal-description {
+  white-space: pre-line;
+}
+
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -169,4 +196,8 @@ nav {
   padding: 10px 20px;
   background-color: var(--gator-green);
   border-radius: 5px;
+}
+
+#modal-apply:hover {
+  filter: brightness(0.9);
 }

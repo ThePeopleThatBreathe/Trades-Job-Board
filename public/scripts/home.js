@@ -1,12 +1,27 @@
 let userType = null;
 
 $(document).ready(function () {
-  $("#jobs-table").DataTable({
+  const table = $("#jobs-table").DataTable({
     responsive: {
       details: false,
     },
+    columnDefs: [
+      { className: "all", targets: [0, 1, 2] },
+    ],
     order: [],
   });
+
+  table.on("draw", function () {
+    table.responsive.recalc();
+  });
+
+  function formatDate(value) {
+    return new Date(value).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
 
   // Swap Login button based on the signed in user
   function swapLoginButton(userType) {
@@ -28,28 +43,19 @@ $(document).ready(function () {
     const row = $(this);
 
     $("#modal-title").text(row.attr("data-title"));
-
-    $("#modal-details").text(
-      row.attr("data-company") +
-        " | " +
-        row.attr("data-trade") +
-        " | " +
-        row.attr("data-location") +
-        " | Internship: " +
-        row.attr("data-internship") +
-        " | " +
-        row.attr("data-hours") +
-        " | Posted " +
-        row.attr("data-posted") +
-        " | Expires " +
-        row.attr("data-expires"),
-    );
+    $("#modal-company").text(row.attr("data-company"));
+    $("#modal-trade").text(row.attr("data-trade"));
+    $("#modal-location").text(row.attr("data-location"));
+    $("#modal-hours").text(row.attr("data-hours"));
+    $("#modal-internship").text(row.attr("data-internship"));
+    $("#modal-posted").text(formatDate(row.attr("data-posted")));
+    $("#modal-expires").text(formatDate(row.attr("data-expires")));
 
     $("#modal-description").text(
       row.attr("data-description") || "No description provided.",
     );
 
-    const url = row.attr("data-url");
+    const url = row.attr("data-url") || "";
     if (url.startsWith("http://") || url.startsWith("https://")) {
       $("#modal-apply").attr("href", url).show();
     } else {
