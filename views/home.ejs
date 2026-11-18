@@ -20,9 +20,15 @@
 
   <nav id="main-nav">
     <a class="button" href="https://www.greenriver.edu/students/academics/areas-of-interest/program-maps/trades-industrial-tech-aviation-natural-resources/index.html" target="_blank">Learn more about the trades at Green River</a>
+    <% if (!userType) { %>
     <button class="button" id="login-btn" type="button">Login</button>
-    <a class="button" id="add-job-link" href="/add-job" hidden>Add Jobs</a>
-    <a class="button" id="saved-jobs-link" href="/saved-jobs" hidden>View Saved Jobs</a>
+    <% } %>
+    <% if (userType === "admin") { %>
+    <a class="button" href="/add-job">Add Jobs</a>
+    <% } %>
+    <% if (userType === "basic") { %>
+    <a class="button" href="/saved-jobs">View Saved Jobs</a>
+    <% } %>
   </nav>
 
   <div id="main">
@@ -96,19 +102,27 @@
         <button id="login-close" type="button" aria-label="Close">&times;</button>
         <h2>Login</h2>
         <form id="login-form">
+          <div id="login-error-div">
+            <p id="login-error" hidden>Check username or password.</p>
+          </div>
           <label for="username">Username</label>
           <input id="username" type="text">
 
           <label for="password">Password</label>
           <input id="password" type="password">
 
-          <button class="button" type="submit">Log in</button>
-          <p id="login-error" hidden>Check username or password.</p>
+          <div id="login-submit">
+            <button class="button" type="submit">Log in</button>
+          </div>
         </form>
       </div>
     </div>
-
   </div>
+  <% if (userType) { %>
+  <form id="logout" action="/logout" method="POST">
+    <button class="button" type="submit">Log out</button>
+  </form>
+  <% } %>
 
 </body>
 

@@ -6,15 +6,13 @@
   <%- include('partials/head', {title: "Saved Jobs"}) %>
   <%- include('partials/jQuery') %>
   <%- include('partials/datatables') %>
-  
+
+  <link rel="stylesheet" href="/styles/saved-jobs.css">
   <script src="/scripts/saved-jobs.js" defer></script>
 </head>
 
 <body>
   <div id="main">
-    <% if (savedJobs.length === 0) { %>
-    <p>No jobs saved</p>
-    <% } else { %>
     <table id="saved-jobs-table">
       <thead>
         <tr>
@@ -43,8 +41,10 @@
         <% }) %>
       </tbody>
     </table>
-    <% } %>
   </div>
+  <nav id="main-nav">
+    <a href="/" class="button">Go Back</a>
+  </nav>
 </body>
 
 </html>

@@ -1,8 +1,8 @@
-// Import the express module
 import express from "express";
 import mysql from "mysql2";
 import dotenv from "dotenv";
 dotenv.config();
+import session from "express-session";
 
 const pool = mysql
   .createPool({
@@ -23,15 +23,36 @@ const PORT = 3004;
 // Temp saved jobs variable
 const savedJobs = [];
 
+// Session Middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 },
+  }),
+);
+
 // Enable static file serving
 app.use(express.static("public"));
 
 // set view engine to ejs
 app.set("view engine", "ejs");
 
-// Add "middleware" to allow the app to parse form data
-// Access form data through req.body
+// Add "middleware" to allow the app to parse form data and JSON
+// Access the data through req.body
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Only lets through users with the given role
+function requireRole(role) {
+  return (req, res, next) => {
+    if (req.session.userType === role) {
+      return next();
+    }
+    res.redirect("/");
+  };
+}
 
 // Define a default route ("/")
 app.get("/", async (req, res) => {
@@ -39,28 +60,57 @@ app.get("/", async (req, res) => {
     const [jobs] = await pool.query(
       "SELECT * FROM job_listings ORDER BY post_date DESC",
     );
-    console.log(jobs);
-    res.render("home", { jobs });
+    res.render("home", { jobs, userType: req.session.userType });
   } catch (err) {
     console.log("Database Error: " + err);
     res.status(500).send("Database Error occurred");
   }
 });
 
-// Define a route to add a job
-app.get("/add-job", (req, res) => {
+// Login route (called by the login modal)
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (
+    username === process.env.ADMIN_USER &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    req.session.userType = "admin";
+    return res.json({ success: true });
+  }
+
+  if (
+    username === process.env.BASIC_USER &&
+    password === process.env.BASIC_PASSWORD
+  ) {
+    req.session.userType = "basic";
+    return res.json({ success: true });
+  }
+
+  res.status(401).json({ success: false });
+});
+
+// Define a route to logout`
+app.post("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.clearCookie("connect.sid");
+    res.redirect("/");
+  });
+});
+
+// Define a route to add a job (admins only)
+app.get("/add-job", requireRole("admin"), (req, res) => {
   res.render("add-job");
 });
 
-// Define a route to view saved jobs
-app.get("/saved-jobs", (req, res) => {
+// Define a route to view saved jobs (basic users only)
+app.get("/saved-jobs", requireRole("basic"), (req, res) => {
   res.render("saved-jobs", { savedJobs });
 });
 
-// Define a route to submit form data and show confirmation page
-app.post("/submit-job", async (req, res) => {
+// Define a route to submit form data and show confirmation page (admins only)
+app.post("/submit-job", requireRole("admin"), async (req, res) => {
   const job = req.body;
-  console.log(job);
 
   job.internship = req.body.internship == "true" ? true : false;
 
