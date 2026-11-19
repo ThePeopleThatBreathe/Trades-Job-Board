@@ -73,20 +73,20 @@ $(document).ready(function () {
     $("#username").trigger("focus");
   });
 
-  $("#login-form").on("submit", function (event) {
+  $("#login-form").on("submit", async function (event) {
     event.preventDefault();
 
-    if ($("#username").val() === "admin" && $("#password").val() === "123") {
-      userType = "admin";
-      swapLoginButton(userType);
-      closeModal();
-    } else if (
-      $("#username").val() === "testUser" &&
-      $("#password").val() === "456"
-    ) {
-      userType = "basic";
-      swapLoginButton(userType);
-      closeModal();
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: $("#username").val(),
+        password: $("#password").val(),
+      }),
+    });
+
+    if (response.ok) {
+      location.reload(); // page re-renders with the right buttons
     } else {
       $("#login-error").prop("hidden", false);
     }

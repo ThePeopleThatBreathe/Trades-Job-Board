@@ -20,6 +20,20 @@ html {
   cursor: pointer;
 }
 
+/* Nav */
+#main-nav, #logout{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 0.5rem;
+  gap: 0.5rem;
+}
+
+/* Logout */
+#logout {
+  padding-bottom: 1rem;
+}
+
 /* Media Query */
 @media (max-width: 600px) {
   body {

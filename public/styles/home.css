@@ -43,15 +43,6 @@ header img {
   margin: 0;
 }
 
-/* Nav */
-#main-nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 0.5rem;
-  gap: 0.5rem;
-}
-
 /* Jobs Table Styling */
 #main {
   display: flex;
@@ -146,6 +137,20 @@ header img {
   border: medium solid var(--gator-green);
   border-radius: 15px;
 }
+
+#login-submit {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+#login-error-div {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
 
 .modal-content h2 {
   margin: 0;
