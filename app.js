@@ -60,6 +60,7 @@ app.get("/", async (req, res) => {
     const [jobs] = await pool.query(
       "SELECT * FROM job_listings ORDER BY post_date DESC",
     );
+    req.session.userType = 'admin'; // Remove this after testing
     res.render("home", { jobs, userType: req.session.userType });
   } catch (err) {
     console.log("Database Error: " + err);
